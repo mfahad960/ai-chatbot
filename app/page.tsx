@@ -1,19 +1,35 @@
+'use client';
+
+import { FormEvent, useState } from "react";
 
 export default function Home() {
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    console.log(message);
+    setMessage("");
+  }
+
   return (
-    <div className="flex flex-col min-w-0 h-dvh bg-background">
-      <div className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4">
-        Body
+    <div className="flex flex-col h-dvh bg-background m-2 p-2">
+      <div className="flex flex-col justify-center max-w-3xl mx-auto gap-6 flex-1 pt-4">
+        <div className="rounded-xl flex flex-col gap-8 leading-relaxed text-center max-w-xl">
+          <p>
+              This is an open source chatbot template built with Next.js and the AI SDK by Vercel. It uses the
+              <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">streamText</code>
+              function in the server and the
+              <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">useChat</code>
+              hook on the client to create a seamless chat experience.
+          </p>
+        </div>
       </div>
-      <div className="m-4">
-      <form>   
-          <label htmlFor="search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Send a message...</label>
-          <div className="relative">
-              <input type="search" id="search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Send a message..." required />
-              <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-full text-sm px-4 py-2 text-center">Go</button>
-          </div>
+      <form onSubmit={handleSubmit} className="flex flex-col w-full min-h-3xl max-w-3xl mx-auto pb-6 px-4">   
+        <div className="relative w-full flex flex-col">
+          <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="flex block w-full rounded-lg textarea px-3 py-2 text-base" placeholder="Send a message..." />
+          <button disabled={message.length === 0} type="submit" className="inline-flex items-center justify-center absolute end-2.5 bottom-2.5 px-4 py-2 text-center text-white bg-purple-700 rounded-full text-sm disabled:bg-purple-900">Go</button>
+        </div>  
       </form>
-      </div>
     </div>
   );
 }
