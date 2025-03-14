@@ -12,19 +12,19 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col h-dvh m-2 p-2">
+    <div className="flex flex-col h-full m-2 p-2">
       <div className="flex flex-col justify-center max-w-3xl mx-auto gap-6 flex-1 pt-4">
         <div className="rounded-xl flex flex-col gap-8 leading-relaxed text-center max-w-xl">
           <p>
-              This is an open source chatbot template built with Next.js and the AI SDK by Vercel. It uses the
-              <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">streamText</code>
-              function in the server and the
-              <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">useChat</code>
-              hook on the client to create a seamless chat experience.
+            This is an open source chatbot template built with Next.js and the AI SDK by Vercel. It uses the
+            <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">streamText</code>
+            function in the server and the
+            <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">useChat</code>
+            hook on the client to create a seamless chat experience.
           </p>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col w-full min-h-3xl max-w-3xl mx-auto pb-6 px-4">   
+      <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-3xl mx-auto mb-2 px-4">   
         <div className="relative w-full flex flex-col">
           <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="flex block w-full rounded-lg textarea px-3 py-2 text-base" placeholder="Ask anything" />
           {/* <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,6 +35,9 @@ export default function Home() {
           <button disabled={message.length === 0} type="submit" className="button inline-flex items-center justify-center absolute end-2.5 bottom-2.5 px-4 py-2 text-center rounded-full text-sm">Go</button>
         </div>  
       </form>
+      <div className="bottom-line">
+        <p className="">AI-generated, for reference only</p>
+      </div>
     </div>
   );
 }

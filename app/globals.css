@@ -30,6 +30,17 @@ body {
   display: flex;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
 .textarea {
   color: var(--textcolor);
   background: var(--textareabg);
@@ -63,10 +74,19 @@ body {
   border-radius: 0.7rem;
   text-align: start;
   margin: 4px 0px;
-  padding: 6px 8px;
+  padding: 8px 10px;
   font-size: 0.9rem;
 }
 
 .chat-day {
   color: var(--chat-button-bg);
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin: 10px 0px;
+}
+
+.bottom-line {
+  text-align: center;
+  font-weight: 100;
+  font-size: 0.7rem;
 }
