@@ -1,13 +1,21 @@
 'use client';
 
 import { FormEvent, useState } from "react";
+import { getPrompt } from "./components/lib/actions";
 
 export default function Home() {
   const [message, setMessage] = useState("");
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    console.log(message);
+    getPrompt(message)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.error("Error sending email:", error);
+      })
     setMessage("");
   }
 

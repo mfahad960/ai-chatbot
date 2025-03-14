@@ -7,9 +7,10 @@
   --customblue: #4D6BFE;
   --buttonhover: #4F6ECA;
   --chat-button-bg: #494949;
+  --chat-button-hover-bg: #333333;
   --textareabg: #404045;
+  --sidebar-bg: #212327;
   --lightgrey: #292A2D;
-  --darkgrey: #212327;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -65,17 +66,25 @@ body {
 }
 
 .sidebar {
-  background-color: var(--darkgrey);
+  width: 20.3vw;
+  background-color: var(--sidebar-bg);
 }
 
 .chat-button {
   color: white;
-  background-color: var(--chat-button-bg);
   border-radius: 0.7rem;
   text-align: start;
   margin: 4px 0px;
   padding: 8px 10px;
   font-size: 0.9rem;
+}
+
+.chat-button:hover {
+  background-color: var(--chat-button-hover-bg);
+}
+
+.chat-button:active {
+  background-color: var(--chat-button-bg);
 }
 
 .chat-day {
