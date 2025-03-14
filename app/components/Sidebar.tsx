@@ -12,9 +12,24 @@ export default function Sidebar() {
     <div className="sidebar top-0 left-0 h-full text-white">
       <div className="flex items-center justify-center h-16">
         <h1 className="text-xl font-bold">top</h1>
+        {/* <Image
+          className=""
+          src="/deepseek-logo.png"
+          alt="new-chat-logo"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: '70%', height: 'auto' }}
+        /> */}
       </div>
       <button type="submit" className="flex new-chat-button mx-4 px-2 py-2 gap-2 text-center">
-        <Image className="invert" src="/new-chat.png" alt="new-chat-logo" width={20} height={20}></Image>
+        <Image
+          className="invert"
+          src="/new-chat.png"
+          alt="new-chat-logo"
+          width={20}
+          height={20}
+        />
         New chat
       </button>
       <div className="flex flex-col flex-grow p-4">
