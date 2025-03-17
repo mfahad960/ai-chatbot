@@ -27,7 +27,7 @@ export default function Home() {
       <div className="flex flex-col justify-center max-w-3xl mx-auto gap-6 flex-1 pt-4">
 
         {/* Deepseek intro */}
-        <div className="leading-relaxed text-center">
+        {/* <div className="leading-relaxed text-center">
           <div className="flex flex-row items-center justify-center mb-4">
             <Image
               className="mr-4"
@@ -41,10 +41,10 @@ export default function Home() {
             <h1 style={{fontWeight: 600, fontSize: "22px", paddingRight: "14px"}}>Hi, I'm DeepSeek.</h1>
           </div>
           <p style={{fontWeight: 400, fontSize: "14px"}}>How can I help you today?</p>
-        </div>
+        </div> */}
 
         {/* Nextjs example text */}
-        {/* <div className="flex flex-col gap-8 leading-relaxed text-center max-w-xl">
+        <div className="flex flex-col gap-8 leading-relaxed text-center max-w-xl">
           <p>
             This is an open source chatbot template built with Next.js and the AI SDK by Vercel. It uses the
             <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">streamText</code>
@@ -52,7 +52,7 @@ export default function Home() {
             <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">useChat</code>
             hook on the client to create a seamless chat experience.
           </p>
-        </div> */}
+        </div>
       </div>
 
       {/* Text Box */}

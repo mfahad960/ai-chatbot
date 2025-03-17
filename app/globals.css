@@ -80,6 +80,11 @@ body {
   background-color: var(--sidebar-bg);
 }
 
+.sidebar-closed {
+  width: 8vw;
+  background-color: var(--sidebar-bg);
+}
+
 .chat-button {
   color: white;
   border-radius: 0.7rem;
