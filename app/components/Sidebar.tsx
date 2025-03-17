@@ -22,7 +22,7 @@ export default function Sidebar() {
     <>
       {isOpen ? (
         // Open Sidebar
-        <div className="sidebar top-0 left-0 h-full text-white w-64">
+        <div className={`sidebar top-0 left-0 h-full text-white transition-all duration-300 ${isOpen ? "w-64" : "w-16"}`}>
           <div className="flex items-center justify-center h-16">
             <h1 className="text-xl font-bold my-8">Top</h1>
             <button onClick={toggleSidebar} className="new-chat-button mx-4 px-2 py-2">Close</button>
@@ -41,8 +41,8 @@ export default function Sidebar() {
         </div>
       ) : (
         // Closed Sidebar
-        <div className="sidebar-closed top-0 left-0 h-full text-white text-center w-16">
-          <h1 className="text-xl font-bold my-8">Top</h1>
+        <div className={`sidebar-closed top-0 left-0 h-full text-white transition-all duration-300 ${isOpen ? "w-16" : "w-64"}`}>
+          <h1 className="text-center text-xl font-bold my-8">Top</h1>
           <button onClick={toggleSidebar} className="new-chat-button mx-4 px-2 py-2">Open</button>
         </div>
       )}
