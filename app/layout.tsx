@@ -24,8 +24,8 @@ export default function RootLayout({
         className={`${poppins.className} antialiased`}
       >
         <div className="container">
-          <Sidebar />
-          <div className="flex-grow p-4">
+          {/* <Sidebar /> */}
+          <div className="w-full p-4">
             {children}
           </div>
         </div>
