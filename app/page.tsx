@@ -1,57 +1,136 @@
 'use client';
 
-import { FormEvent, useState } from "react";
-import { getPrompt } from "./components/lib/actions";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+
+type Message = {
+  id: number;
+  sender: "user" | "bot";
+  text: string;
+};
+
+const WS_URL = "ws://localhost:8080";
 
 export default function Home() {
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  const handleSubmit = (event: FormEvent) => {
+  const wsRef = useRef<WebSocket | null>(null);
+  const msgIdRef = useRef(0);
+
+  // Connect WebSocket on mount, clean up on unmount
+  useEffect(() => {
+    const ws = new WebSocket(WS_URL);
+    wsRef.current = ws;
+
+    ws.onmessage = (event: MessageEvent<string>) => {
+      try {
+        const data = JSON.parse(event.data) as { type: string; text: string };
+        addMessage("bot", data.text);
+      } catch {
+        addMessage("bot", event.data);
+      }
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  function addMessage(sender: "user" | "bot", text: string) {
+    msgIdRef.current += 1;
+    setMessages((prev) => [
+      ...prev,
+      { id: msgIdRef.current, sender, text },
+    ]);
+  }
+
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    // getPrompt(message)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     console.error("Error sending email:", error);
-    //   })
-    console.log(message);
+    const trimmed = message.trim();
+    if (!trimmed) return;
+
+    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+      addMessage("bot", "⚠️ Not connected to server. Please refresh.");
+      return;
+    }
+
+    // Show user message in chat immediately
+    addMessage("user", trimmed);
+
+    // Send to backend
+    wsRef.current.send(JSON.stringify({ text: trimmed }));
+
+    setMessage("");
   }
 
   return (
-    <>
-      <div className="flex flex-col h-full gap-4">
-
-        {/* Text div */}
-        <div className="flex flex-col justify-center max-w-3xl mx-auto gap-6 flex-1 pt-4">
-          <div className="flex flex-col gap-8 leading-relaxed text-center max-w-xl">
-            <p>
-              This is an open source chatbot template built with Next.js and the AI SDK by Vercel. It uses the
-              <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">streamText</code>
-              function in the server and the
-              <code className="rounded-md bg-gray-700 px-1 py-0.5 mx-2">useChat</code>
-              hook on the client to create a seamless chat experience.
-            </p>
-          </div>
-        </div>
-
-        {/* Text Box */}
-        <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto mb-2 px-4">   
-          <div className="relative w-full flex flex-col">
-            <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="flex block w-full rounded-lg textarea px-3 py-3 text-base" placeholder="Ask anything" />
-            <button disabled={message.length === 0} type="submit" className="button inline-flex absolute end-2.5 bottom-2.5 rounded-full">
-              <Image className="invert" src="/up-arrow.png" alt="up-arrow" width={15} height={15} />
-            </button>
-          </div>
-        </form>
-
-        {/* Footer */}
-        <div className="bottom-line">
-          <p className="">AI-generated, for reference only</p>
-        </div>
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between max-w-3xl w-full mx-auto px-4 py-2">
+        <h2 className="text-white font-semibold text-sm">Dialogflow Chat</h2>
       </div>
-    </>
+      <div className="flex-1 overflow-y-auto max-w-3xl w-full mx-auto px-4 py-2 flex flex-col gap-3">
+        {messages.length === 0 && (
+          <p className="text-center text-gray-500 text-sm mt-8 select-none">
+            Send a message to start chatting.
+          </p>
+        )}
+
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+          >
+            <div
+              className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm break-words ${
+                msg.sender === "user"
+                  ? "bg-blue-600 text-white rounded-br-sm"
+                  : "bg-gray-700 text-gray-100 rounded-bl-sm"
+              }`}
+            >
+              {msg.text}
+            </div>
+          </div>
+        ))}
+
+      </div>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-3xl mx-auto mb-2 px-4"
+      >
+        <div className="relative w-full flex flex-col">
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              // Submit on Enter (without Shift)
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e as unknown as FormEvent);
+              }
+            }}
+            className="flex block w-full rounded-lg textarea px-3 py-3 text-base"
+            placeholder="Ask anything"
+            rows={2}
+          />
+          <button
+            disabled={message.trim().length === 0}
+            type="submit"
+            className="button inline-flex absolute end-2.5 bottom-2.5 rounded-full"
+          >
+            <Image
+              className="invert"
+              src="/up-arrow.png"
+              alt="send"
+              width={15}
+              height={15}
+            />
+          </button>
+        </div>
+      </form>
+      <div className="bottom-line">
+        <p>AI-generated, for reference only</p>
+      </div>
+    </div>
   );
 }
