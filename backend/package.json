@@ -1,27 +1,27 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "WebSocket server with Dialogflow ES integration",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx src/index.ts"
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.12.1",
+  "dependencies": {
+    "@google-cloud/dialogflow": "^6.7.0",
+    "dotenv": "^16.4.5",
+    "uuid": "^11.0.3",
+    "ws": "^8.18.0"
+  },
   "devDependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.6.0",
-    "@types/ws": "^8.18.1",
-    "ts-node": "^10.9.2",
+    "@types/node": "^22.0.0",
+    "@types/uuid": "^10.0.0",
+    "@types/ws": "^8.5.13",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
-  },
-  "dependencies": {
-    "@google-cloud/dialogflow": "^7.5.0",
-    "express": "^5.2.1",
-    "ws": "^8.20.0"
   }
 }
