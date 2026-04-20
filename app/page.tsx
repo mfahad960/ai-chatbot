@@ -118,6 +118,7 @@ export default function Home() {
         )}
 
         {messages.map((msg) => (
+          msg !== undefined && msg.text !== undefined && (
           <div
             key={msg.id}
             className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
@@ -132,7 +133,7 @@ export default function Home() {
               {msg.text}
             </div>
           </div>
-        ))}
+        )))}
 
         {/* Anchor for auto-scroll */}
         <div ref={bottomRef} />
